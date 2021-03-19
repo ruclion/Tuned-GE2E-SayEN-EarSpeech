@@ -1,5 +1,5 @@
 from synthesizer.hparams import hparams
-from synthesizer.FaPig_train import train
+from synthesizer.Kiss_train import train
 
 
 if __name__ == "__main__":

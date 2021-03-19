@@ -3,6 +3,8 @@ from torch.utils.data import Dataset
 import numpy as np
 from pathlib import Path
 from synthesizer.utils.text import text_to_sequence
+import os
+from synthesizer.utils.symbols import symbols
 
 
 class SynthesizerDataset(Dataset):
@@ -13,11 +15,26 @@ class SynthesizerDataset(Dataset):
             metadata = [line.strip().split("|") for line in metadata_file]
         
         mel_fpaths = [x[0] for x in metadata]
-        embed_fpaths = [x[1].replace('.npy', '-GE2E.npy') for x in metadata]
+        embed_fpaths = [x[1] for x in metadata]
+
+
         self.samples_fpaths = list(zip(mel_fpaths, embed_fpaths))
         self.samples_texts = [x[4] for x in metadata]
         self.metadata = metadata
         self.hparams = hparams
+
+
+
+        # for i in range(len(mel_fpaths)):
+        #     mel = mel_fpaths[i]
+        #     emb = embed_fpaths[i]
+        #     print(mel, emb)
+        #     assert os.path.exists(mel) and os.path.exists(emb)
+        #     for j in self.samples_texts[i]:
+        #         if j in symbols is False:
+        #             assert False
+
+
         
         print("Found %d samples" % len(self.samples_fpaths))
     
